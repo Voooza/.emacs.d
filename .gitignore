@@ -6,3 +6,7 @@ elpa
 backups
 auto-save-list
 ac-comphist.dat
+
+projectile*
+server
+*~

@@ -3,15 +3,30 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (tango-dark)))
+ ;; '(custom-enabled-themes (quote (tango-dark)))
  '(nrepl-sync-request-timeout 60)
- '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/")))))
+ '(org-agenda-files
+   (quote
+    ("c:/Users/vanisp/org/java_upgrade.org" "c:/Users/vanisp/org/bars.org" "c:/Users/vanisp/org/cobol_rewrite.org" "c:/Users/vanisp/org/general.org")))
+ '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/"))))
+ '(package-selected-packages
+   (quote
+    (magit counsel swiper multi-term paredit-everywhere paredit ac-cider cider clojure-mode projectile better-defaults))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; adjusting path for cygwin integration
+(setenv "PATH" (concat  "C:\\cygwin64\\bin;" (getenv "PATH")))
+;;(setq exec-path (append exec-path '("/sw/bin")))
+
+(setq system-time-locale "C")
+(setq org-todo-keywords
+  '((sequence "TODO(t)" "WIP(w!)" "FEEDBACK(f!)" "|" "DELEGATED(d!)" "DONE(D!)" "CANCELED(c!)")))
+
 
 (add-hook 'prog-mode-hook #'custom-prog-hook)
 
@@ -26,7 +41,7 @@
 
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
 
@@ -40,11 +55,36 @@
 		      multi-term
                       swiper
 		      counsel
-                      magit))
+                      magit
+                      solarized-theme))
 
 (dolist (p my-packages)
   (unless (package-installed-p p)
     (package-install p)))
+
+(setq org-startup-folded nil)
+
+
+;; solarized theme settings
+;; make the modeline high contrast
+(setq solarized-use-variable-pitch nil)
+(setq solarized-high-contrast-mode-line t)
+;; Use less bolding
+(setq solarized-use-less-bold t)
+;; Use more italics
+;;(setq solarized-use-more-italic t)
+;; Use less colors for indicators such as git:gutter, flycheck and similar
+(setq solarized-emphasize-indicators nil)
+;; Don't change size of org-mode headlines (but keep other size-changes)
+(setq solarized-scale-org-headlines nil)
+;; Avoid all font-size changes
+(setq solarized-height-minus-1 1)
+(setq solarized-height-plus-1 1)
+(setq solarized-height-plus-2 1)
+(setq solarized-height-plus-3 1)
+(setq solarized-height-plus-4 1)
+
+(load-theme 'solarized-dark t)
 
 (require 'ac-cider)
 (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
@@ -73,3 +113,12 @@
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+
+(setq inhibit-startup-message t)   
+(find-file "c:/Users/vanisp/org/start.org")
+
+
+;; projectile settings
+(projectile-global-mode)
+(setq projectile-indexing-method 'alien)
+(setq projectile-enable-caching t)
