@@ -13,13 +13,9 @@
  ;; If there is more than one, they won't work right.
  )
 
-(add-hook 'prog-mode-hook #'custom-prog-hook)
 
-(defun custom-prog-hook ()
-  (linum-mode 1)
-  (auto-complete-mode 1)
-  (paredit-mode 1)
-  )
+
+
 
 ;;(require 'move-lines)
 ;;(move-lines-binding)
@@ -30,7 +26,8 @@
 (package-initialize)
 
 
-(defvar my-packages '(better-defaults
+(defvar my-packages '(auto-complete
+		      better-defaults
 		      projectile
 		      clojure-mode
 		      cider
@@ -45,6 +42,16 @@
 (dolist (p my-packages)
   (unless (package-installed-p p)
     (package-install p)))
+
+
+(defun custom-prog-hook ()
+  (linum-mode 1)
+  (auto-complete-mode 1)
+  (paredit-mode 1)
+  )
+
+
+(add-hook 'prog-mode-hook #'custom-prog-hook)
 
 (require 'ac-cider)
 (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
